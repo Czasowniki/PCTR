@@ -157,4 +157,28 @@
             const isP = pauseBtn.dataset.paused === "true";
             if (!isP) {
                 mv.pause();
-                document.getElementById('
+                document.getElementById('icon-pause').style.display = 'none';
+                document.getElementById('icon-play').style.display = 'block';
+                pauseBtn.dataset.paused = "true";
+            } else {
+                mv.play();
+                document.getElementById('icon-pause').style.display = 'block';
+                document.getElementById('icon-play').style.display = 'none';
+                pauseBtn.dataset.paused = "false";
+            }
+        };
+
+        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+        if (isMobile) {
+            document.getElementById('ar-label').style.display = 'flex';
+            document.getElementById('action-toggle').onclick = () => mv.activateAR();
+        } else {
+            document.getElementById('fs-icon').style.display = 'block';
+            document.getElementById('action-toggle').onclick = () => {
+                if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+                else document.exitFullscreen();
+            };
+        }
+    </script>
+</body>
+</html>
