@@ -101,7 +101,7 @@
         shadow-intensity="1" shadow-softness="1"
         exposure="1.6" environment-intensity="1.8"
         autoplay
-        camera-orbit="0deg 75deg 125%" 
+        camera-orbit="0deg 75deg 110%" 
         camera-target="0m 0.08m 0m"
         min-camera-orbit="auto auto 50%" 
         max-camera-orbit="auto auto 600%"
@@ -110,8 +110,8 @@
 
     <script>
         const CONFIG = {
-            mobileOrbit: "0deg 75deg 110%",
-            desktopOrbit: "0deg 75deg 125%",
+            mobileOrbit: "0deg 75deg 105%",
+            desktopOrbit: "0deg 75deg 110%",
             mobileTarget: "0m 0.08m 0m",
             desktopTarget: "0m 0.08m 0m"
         };
@@ -121,4 +121,40 @@
         mv.addEventListener('load', () => {
             const availableAnimations = mv.availableAnimations;
             if (availableAnimations.length > 0) {
-              
+                mv.animationName = availableAnimations[0];
+                mv.play();
+            }
+        });
+
+        document.querySelector('#reset-view').onclick = () => {
+            const isMob = window.innerWidth < 768;
+            mv.cameraOrbit = isMob ? CONFIG.mobileOrbit : CONFIG.desktopOrbit;
+            mv.cameraTarget = isMob ? CONFIG.mobileTarget : CONFIG.desktopTarget;
+            mv.fieldOfView = "auto";
+        };
+
+        const togglePanel = (id) => {
+            const p = document.getElementById(id);
+            const other = id === 'panel-pctr' ? 'panel-czasowniki' : 'panel-pctr';
+            const otherEl = document.getElementById(other);
+            if (otherEl) otherEl.classList.remove('visible');
+            if (p) p.classList.toggle('visible');
+        };
+
+        // Poprawione powiązania
+        document.getElementById('toggle-pctr').onclick = () => togglePanel('panel-pctr');
+        document.getElementById('toggle-czasowniki').onclick = () => togglePanel('panel-czasowniki');
+
+        document.getElementById('theme-toggle').onclick = () => {
+            document.body.classList.toggle('dark-mode');
+            const isDark = document.body.classList.contains('dark-mode');
+            mv.exposure = isDark ? "1.6" : "2.8";
+            document.querySelector('meta[name="theme-color"]').setAttribute('content', isDark ? '#121212' : '#ffffff');
+        };
+
+        const pauseBtn = document.getElementById('pause-toggle');
+        pauseBtn.onclick = () => {
+            const isP = pauseBtn.dataset.paused === "true";
+            if (!isP) {
+                mv.pause();
+                document.getElementById('
