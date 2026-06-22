@@ -101,19 +101,20 @@
         shadow-intensity="1" shadow-softness="1"
         exposure="1.6" environment-intensity="1.8"
         autoplay
-        camera-orbit="0deg 75deg 80%" 
-        camera-target="0m 0.4m 0m"
-        min-camera-orbit="auto auto 40%" 
+        camera-orbit="-90deg 65deg 55%" 
+        camera-target="0m 0.08m 0m"
+        min-camera-orbit="auto auto 20%" 
         max-camera-orbit="auto auto 600%"
         loading="eager" interaction-prompt="none">
     </model-viewer>
 
     <script>
+        // Tutaj również zmniejszyłem odległość do 50% i 55%, aby po resecie model był duży
         const CONFIG = {
-            mobileOrbit: "-90deg 55deg 110%",
-            desktopOrbit: "-90deg 55deg 120%",
-            mobileTarget: "0m 0m -0.015m",
-            desktopTarget: "0m 0m -0.015m"
+            mobileOrbit: "-90deg 65deg 50%",
+            desktopOrbit: "-90deg 65deg 55%",
+            mobileTarget: "0m 0.08m 0m",
+            desktopTarget: "0m 0.08m 0m"
         };
 
         const mv = document.querySelector('#clock-model');
@@ -161,23 +162,4 @@
                 pauseBtn.dataset.paused = "true";
             } else {
                 mv.play();
-                document.getElementById('icon-pause').style.display = 'block';
-                document.getElementById('icon-play').style.display = 'none';
-                pauseBtn.dataset.paused = "false";
-            }
-        };
-
-        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-        if (isMobile) {
-            document.getElementById('ar-label').style.display = 'flex';
-            document.getElementById('action-toggle').onclick = () => mv.activateAR();
-        } else {
-            document.getElementById('fs-icon').style.display = 'block';
-            document.getElementById('action-toggle').onclick = () => {
-                if (!document.fullscreenElement) document.documentElement.requestFullscreen();
-                else document.exitFullscreen();
-            };
-        }
-    </script>
-</body>
-</html>
+                document.getElementById('icon-pause').style.display = '
