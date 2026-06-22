@@ -76,7 +76,7 @@
     </div>
 
     <button class="ui-element icon-btn btn-theme" id="theme-toggle">
-        <svg viewBox="0 0 24 24"><path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm0 18V4c4.42 0 8 3.58 8 8s-3.58 8-8 8z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M12 2C6.47( 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm0 18V4c4.42 0 8 3.58 8 8s-3.58 8-8 8z"/></svg>
     </button>
 
     <button class="ui-element icon-btn btn-pause" id="pause-toggle">
@@ -102,7 +102,7 @@
         exposure="1.6" environment-intensity="1.8"
         autoplay
         camera-orbit="-90deg 65deg auto" 
-        field-of-view="55deg"
+        field-of-view="85deg"
         camera-target="0m 0.08m 0m"
         min-camera-orbit="auto auto 20%" 
         max-camera-orbit="auto auto 600%"
@@ -110,13 +110,13 @@
     </model-viewer>
 
     <script>
-        // Zamiast manipulować odległością w metrach/procentach, używamy fieldOfView (kąta widzenia).
-        // Wyższa wartość (np. 55deg-60deg) oddala kamerę, optycznie zmniejszając model o połowę.
+        // Znacznie zwiększyliśmy kąt widzenia (Fov), aby oddalić kamerę i zmniejszyć optycznie model.
+        // Jeśli na telefonie wciąż będzie za duży, zmień mobileFov na np. "100deg".
         const CONFIG = {
             orbit: "-90deg 65deg auto",
             target: "0m 0.08m 0m",
-            mobileFov: "60deg",
-            desktopFov: "55deg"
+            mobileFov: "95deg",
+            desktopFov: "85deg"
         };
 
         const mv = document.querySelector('#clock-model');
@@ -127,6 +127,10 @@
                 mv.animationName = availableAnimations[0];
                 mv.play();
             }
+            
+            // Dopasowanie początkowego widoku w zależności od urządzenia zaraz po załadowaniu
+            const isMob = window.innerWidth < 768;
+            mv.fieldOfView = isMob ? CONFIG.mobileFov : CONFIG.desktopFov;
         });
 
         document.querySelector('#reset-view').onclick = () => {
