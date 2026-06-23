@@ -109,67 +109,7 @@
     </model-viewer>
 
     <script>
-        // Jeśli na telefonie obiekt będzie wciąż zbyt blisko, zmień mobileOrbit na np. "-90deg 65deg 0.55m"
         const CONFIG = {
             mobileOrbit: "-90deg 65deg 0.5m",  
             desktopOrbit: "-90deg 65deg 0.45m", 
-            target: "0m 0.08m 0m"
-        };
-
-        const mv = document.querySelector('#clock-model');
-
-        mv.addEventListener('load', () => {
-            const availableAnimations = mv.availableAnimations;
-            if (availableAnimations.length > 0) {
-                mv.animationName = availableAnimations[0];
-                mv.play();
-            }
-            
-            const isMob = window.innerWidth < 768;
-            mv.cameraOrbit = isMob ? CONFIG.mobileOrbit : CONFIG.desktopOrbit;
-            mv.fieldOfView = "auto"; // reset pola widzenia do normy
-        });
-
-        document.querySelector('#reset-view').onclick = () => {
-            const isMob = window.innerWidth < 768;
-            mv.cameraOrbit = isMob ? CONFIG.mobileOrbit : CONFIG.desktopOrbit;
-            mv.cameraTarget = CONFIG.target;
-            mv.fieldOfView = "auto";
-        };
-
-        const togglePanel = (id) => {
-            const p = document.getElementById(id);
-            const other = id === 'panel-pctr' ? 'panel-czasowniki' : 'panel-pctr';
-            const otherEl = document.getElementById(other);
-            if (otherEl) otherEl.classList.remove('visible');
-            if (p) p.classList.toggle('visible');
-        };
-
-        document.getElementById('toggle-pctr').onclick = () => togglePanel('panel-pctr');
-        document.getElementById('toggle-czasowniki').onclick = () => togglePanel('panel-czasowniki');
-
-        document.getElementById('theme-toggle').onclick = () => {
-            document.body.classList.toggle('dark-mode');
-            const isDark = document.body.classList.contains('dark-mode');
-            mv.exposure = isDark ? "1.6" : "2.8";
-            document.querySelector('meta[name="theme-color"]').setAttribute('content', isDark ? '#121212' : '#ffffff');
-        };
-
-        const pauseBtn = document.getElementById('pause-toggle');
-        pauseBtn.onclick = () => {
-            const isP = pauseBtn.dataset.paused === "true";
-            if (!isP) {
-                mv.pause();
-                document.getElementById('icon-pause').style.display = 'none';
-                document.getElementById('icon-play').style.display = 'block';
-                pauseBtn.dataset.paused = "true";
-            } else {
-                mv.play();
-                document.getElementById('icon-pause').style.display = 'block';
-                document.getElementById('icon-play').style.display = 'none';
-                pauseBtn.dataset.paused = "false";
-            }
-        };
-    </script>
-</body>
-</html>
+            target: "0m 0.0
